@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinara Publications</title>
+
+    <!-- Load required Bootstrap and BootstrapVue CSS -->
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script> -->
+
+    <!-- Load Vue followed by BootstrapVue -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <!-- Load the following for BootstrapVueIcons support -->
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue-scrollto"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tween.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="mycss.css">
+</head>
+
+<body>
+    <div id="app">
+        <app-header :links="links"></app-header>
+        <div class="app-body">
+            <app-banner class="p-2 text-wrap text-uppercase" :header="header" style="height: 70vh;"
+                :style="{ 'background-image': 'url(' + header.image + ')', 'background-position': 'center', 'background-repeat': 'no-repeat', 'background-size': 'cover' }">
+            </app-banner>
+            <our-products :details="productdetails"></our-products>
+            <quality-assured :details="qualitydetails"></quality-assured>
+            <stat-facts :details="factdetails"></stat-facts>
+            <cust-testimonials :testimonialdetails="testimonialdetails"></cust-testimonials>
+            <about-us :info="info"></about-us>
+            <contact-us :contact="contact"></contact-us>
+        </div>
+        <app-footer :footer="footer" :links="links"></app-footer>
+    </div>
+    <script>
+        VueScrollTo.setDefaults({
+            container: "body",
+            duration: 750,
+            easing: "ease",
+            offset: -60,
+            force: true,
+            cancelable: true,
+            onStart: false,
+            onDone: false,
+            onCancel: false,
+            x: false,
+            y: true
+        })
+
+        Vue.component('app-header', {
+            props: ['links'],
+            template: `
+            <b-navbar toggleable="lg" type="dark" variant="dark" sticky="true">
+                <b-navbar-brand href="#">Kinara Publications</b-navbar-brand>
+                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+                <b-collapse id="nav-collapse" is-nav>
+                    <b-navbar-nav class="ml-auto">
+                        <b-nav-item v-for="link in links" :href="link.href" v-scroll-to="link.href" :key="link.id" v-smooth-scroll style="text-transform: uppercase;">{{link.title}}</b-nav-item>
+                    </b-navbar-nav>
+                </b-collapse>
+            </b-navbar>
+            `
+        })
+
+        Vue.component('app-banner', {
+            props: ['header'],
+            template: `
+            <b-jumbotron fluid :header="header.title" :lead="header.quote" header-level="6" id="banner">
+                <p v-if="header.info">{{header.info}}</p>
+                <b-button variant="success" href="#our-products" v-scroll-to="'#our-products'">Browse Products</b-button>
+            </b-jumbotron>`
+        })
+
+        Vue.component('our-products', {
+            props: ['details'],
+            template: `
+            <b-container id="our-products">
+                <b-row>
+                    <b-col class="section-header">
+                        <h3 class="section-title">{{details.name}}</h3>
+                        <p class="section-description">{{details.description}}</p>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col lg="4" md="6" v-for="product in details.products" :key="product.name">
+                        <div class="box" :style="{'background': 'url('+product.image+')'}">
+                            <h4 class="title"><a class="product-name" href="#">{{product.name}}</a></h4>
+                        </div>
+                    </b-col>
+                </b-row>
+                <hr class="my-2">
+            </b-container>
+            `
+        })
+
+        Vue.component('quality-assured', {
+            props: ['details'],
+            template: `
+            <b-container>
+            <b-row>
+                <b-col class="section-header">
+                    <h3 class="section-title">{{details.name}}</h3>
+                    <p class="section-description" style="padding-bottom: 0px;">{{details.description}}</p>
+                </b-col>
+            </b-row>
+            <b-row class="quality-list-items">
+                <b-col lg="8" offset-lg="2" md="8" offset-md="2">
+                    <b-jumbotron bg-variant="secondary">
+                        <template v-slot:lead>
+                            <b-list-group>
+                                <b-list-group-item v-for="(statement,id) in details.statements" :key="id" style="border: none;">
+                                <b-row>
+                                <b-col cols="2"><b-icon-check2 style="position: relative; top: 7px;" variant="success" font-scale="2"></b-icon-check2> </b-col>
+                                <b-col>{{statement.name}}</b-col>
+                                </b-row>
+                                </b-list-group-item>
+                            </b-list-group>
+                        </template>
+                      </b-jumbotron>
+                </b-col>
+            </b-row>
+            <hr class="my-2">
+        </b-container>
+        `
+        })
+
+        Vue.component('animated-integer', {
+            template: '<span>{{ tweeningValue }}</span>',
+            props: {
+                value: {
+                    type: Number,
+                    required: true
+                }
+            },
+            data: function () {
+                return {
+                    tweeningValue: 0
+                }
+            },
+            watch: {
+                value: function (newValue, oldValue) {
+                    this.tween(oldValue, newValue)
+                }
+            },
+            mounted: function () {
+                this.tween(0, this.value)
+            },
+            methods: {
+                tween: function (startValue, endValue) {
+                    var vm = this
+
+                    function animate() {
+                        if (TWEEN.update()) {
+                            requestAnimationFrame(animate)
+                        }
+                    }
+                    new TWEEN.Tween({
+                        tweeningValue: startValue
+                    })
+                        .to({
+                            tweeningValue: endValue
+                        }, 1500)
+                        .onUpdate(function () {
+                            vm.tweeningValue = this.tweeningValue.toFixed(0)
+                        })
+                        .start()
+                    animate()
+                }
+            }
+        })
+
+        Vue.component('stat-facts', {
+            props: ['details'],
+            template: `
+            <b-container>
+                <b-row>
+                    <b-col class="section-header">
+                        <h3 class="section-title">{{details.name}}</h3>
+                        <p class="section-description">{{details.description}}</p>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col lg="4" md="6" v-for="fact in details.facts" :key="fact.name">
+                        <div class="box">
+                            <h1 id="show-animation"><a class="fact-count" href="#"><animated-integer :value="fact.count"></animated-integer></a></h1>
+                            <p>{{fact.name}}</p>
+                        </div>
+                    </b-col>
+                </b-row>
+                <hr class="my-2">
+            </b-container>
+            `
+        })
+
+        Vue.component('cust-testimonials', {
+            props: ['testimonialdetails'],
+            template: `
+            <b-container>
+                <b-row>
+                    <b-col class="section-header">
+                        <h3 class="section-title">{{testimonialdetails.name}}</h3>
+                        <p class="section-description">{{testimonialdetails.description}}</p>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col lg="8" offset-lg="2">
+                        <b-carousel id="carousel-1" :interval="4000" controls indicators background="#ababab"
+                            img-width="1024" img-height="480">
+                            <!-- Slides with custom text -->
+                            <b-carousel-slide :img-src="testimonial.img"
+                                v-for="testimonial in testimonialdetails.testimonials" :key="testimonial.id">
+                                <blockquote class="blockquote text-right font-weight-bold">
+                                    <p class="mb-0" style="text-shadow: black 0px 0px 10px;">{{testimonial.comment}}</p>
+                                    <footer class="blockquote-footer"
+                                        style="color: black; text-shadow: white 0px 0px 10px;"><cite
+                                            title="Source Title">{{testimonial.name}}</cite></footer>
+                                </blockquote>
+                            </b-carousel-slide>
+                        </b-carousel>
+                    </b-col>
+                </b-row>
+                <hr class="my-2">
+            </b-container>
+            `
+        })
+
+        Vue.component('about-us', {
+            props: ['info'],
+            template: `
+            <b-container id="about-us">
+                <b-row>
+                    <b-col class="section-header">
+                        <h3 class="section-title">{{info.name}}</h3>
+                        <p class="section-description">{{info.description}}</p>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col md="8">
+                        <h5>{{info.details}}</h5>
+                    </b-col>
+                    <b-col>
+                        <img :src="info.img" alt="image" width="100%" height="200">
+                    </b-col>
+                </b-row>
+                <hr class="my-2">
+            </b-container>
+            `
+        })
+        Vue.component('contact-us', {
+            props: ['contact'],
+            template: `
+            <b-container id="contact-us">
+                <b-row>
+                    <b-col class="section-header">
+                        <h3 class="section-title">{{contact.name}}</h3>
+                        <p class="section-description">{{contact.description}}</p>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col lg="6">
+                        <b-row>
+                            <b-col sm="1" cols="1">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-envelope"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                </svg>
+                            </b-col>
+                            <b-col>
+                                <h5>{{contact.email}}</h5>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col sm="1" cols="1">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-telephone"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M3.925 1.745a.636.636 0 0 0-.951-.059l-.97.97c-.453.453-.62 1.095-.421 1.658A16.47 16.47 0 0 0 5.49 10.51a16.471 16.471 0 0 0 6.196 3.907c.563.198 1.205.032 1.658-.421l.97-.97a.636.636 0 0 0-.06-.951l-2.162-1.682a.636.636 0 0 0-.544-.115l-2.052.513a1.636 1.636 0 0 1-1.554-.43L5.64 8.058a1.636 1.636 0 0 1-.43-1.554l.513-2.052a.636.636 0 0 0-.115-.544L3.925 1.745zM2.267.98a1.636 1.636 0 0 1 2.448.153l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
+                                </svg>
+                            </b-col>
+                            <b-col>
+                                <h5>{{contact.whatsappno}}</h5>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col sm="1" cols="1">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-building"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694L1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" />
+                                    <path
+                                        d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
+                                </svg>
+                            </b-col>
+                            <b-col>
+                                <h5>{{contact.address+", "+contact.city+", "+contact.pincode+", "+contact.state}}</h5>
+                            </b-col>
+                        </b-row>
+                        <iframe src="https://www.google.com/maps/d/embed?mid=1gaQSzilmEXF7ALoUH7VAifYe9fg" height="300"
+                            width="100%"></iframe>
+                    </b-col>
+                    <b-col lg="6" class="mt-4 mt-lg-0">
+                        <h4>{{contact.subheading}}</h4>
+                        <div class="form">
+                            <form
+                                action="https://docs.google.com/forms/u/4/d/e/1FAIpQLSfTY6oWl5OH0FLmllVhD0_5vB3jxvU4WfOFV_NlotH40nl-sA/formResponse"
+                                method="POST" class="contactForm">
+                                <div class="form-group">
+                                    <input type="text" name="entry.1640149585" required class="form-control" id="name"
+                                        placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="entry.1045781291" id="email"
+                                        placeholder="Email, ex: kiranapubilcations@gmail.com"
+                                        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="entry.1166974658" pattern="[0-9]{10}" required="required"
+                                        class="form-control"
+                                        oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' :'Please enter a number like: 9764444408');"
+                                        placeholder="Phone Number" maxlength="10">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="entry.839337160" rows="6" required
+                                        placeholder="Message"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <b-button type="submit" variant="success">Send Message</b-button>
+                                </div>
+                            </form>
+                        </div>
+                    </b-col>
+                </b-row>
+                <hr class="my-2">
+            </b-container>
+            `
+        })
+
+        Vue.component('app-footer', {
+            props: ['footer', 'links'],
+            template: `
+            <b-container fluid style="color:  wheat;background-color: darkslategray; text-align: center;">
+            <b-row>
+                <b-col lg="6" offset-lg="3" md="8" offset-md="2">
+                    <b-list-group horizontal="md" style="justify-content: space-around;">
+                        <b-list-group-item v-for="item in links" :key="item.id" :href="item.href" style="border: none; background-color: darkslategray;">{{item.title}}</b-list-group-item>
+                    </b-list-group>
+                    <b-row id="show-animation">
+                        <b-col v-for="item in footer.socialMedia" :key="item.id">
+                            <a href="#"><i :class="'fa fa-3x '+item.class" style="color: white;"></i></a>
+                        </b-col>
+                    </b-row>
+                    
+                    <h3 class="mt-4 mt-sm-4">{{footer.header}}</h3>
+                    <b-list-group horizontal="md" style="justify-content: space-around;">
+                        <b-list-group-item v-for="(item,id) in footer.address" :key="id" style="border: none; background-color: darkslategray;">{{item}}</b-list-group-item>
+                    </b-list-group>
+                    <hr class="my-2">
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col style="background-color: black;">©2020. All Rights Reserved , Kinara Publication @ Aurangabad</b-col>
+            </b-row>
+        </b-container>
+        `
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                links:
+                    [
+                        { id: 1, title: "Home", href: "#banner" },
+                        { id: 2, title: "Products", href: "#our-products" },
+                        { id: 3, title: "About", href: "#about-us" },
+                        { id: 4, title: "Contact", href: "#contact-us" }
+                    ],
+                header:
+                {
+                    title: "Kinara Publications",
+                    quote: "Delievering More than expected",
+                    info: "",
+                    image: "img/banner-img.jpg"
+                },
+                productdetails: {
+                    name: "Our Products",
+                    description: "We print all types of books",
+                    products: [
+                        { name: "Registers", image: "https://picsum.photos/400/300" },
+                        { name: "NoteBooks", image: "https://loremflickr.com/400/300" },
+                        { name: "Lesson NBs", image: "https://loremflickr.com/400/400" },
+                        { name: "News Papers", image: "https://picsum.photos/400/400" },
+                        { name: "Text Books", image: "https://picsum.photos/300/300" },
+                        { name: "Rough Books", image: "https://picsum.photos/350/250" }
+                    ]
+                },
+                qualitydetails: {
+                    name: "Quality Assured",
+                    description: "We believe in Quality Work",
+                    statements: [
+                        { name: "Reasonable Price" },
+                        { name: "No Compromise in Quality" },
+                        { name: "Customer Satisfaction - Our Utmost Priority" },
+                    ]
+                },
+                factdetails: {
+                    name: "Facts",
+                    description: "Have a look at our statistics",
+                    facts: [
+                        { index: 0, name: "Books Printed", count: "0", startValue: 0, endValue: 12453 },
+                        { index: 1, name: "Customers Served", count: "0", startValue: 0, endValue: 4025 },
+                        { index: 2, name: "Projects Completed", count: "0", startValue: 0, endValue: 2520 },
+                    ],
+                    animationDuration: 223, //in miliseconds
+                    flag: true,
+                },
+                testimonialdetails: {
+                    name: "Testimonials",
+                    description: "See what our customers are saying",
+                    testimonials: [
+                        { id: 0, name: "Someone", comment: "Very nice Publication", img: "https://picsum.photos/1024/480/" },
+                        { id: 1, name: "Someone", comment: "Very nice Publication", img: "https://picsum.photos/1023/480/" },
+                        { id: 2, name: "Someone", comment: "Very nice Publication", img: "https://picsum.photos/1025/480/" }
+                    ]
+                },
+                info: {
+                    name: "About Us",
+                    description: "Few words about us",
+                    details: `We are a so and so company .... Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Ratione natus dolores quia, quod assumenda itaque suscipit officia hic. 
+                            Ipsum deserunt eligendi ullam ipsam ea sequi aliquid assumenda porro quis consequatur.`,
+                    img: "https://picsum.photos/300/200/"
+                },
+                contact: {
+                    name: "Contact Us",
+                    description: "We are eager to hear from you",
+                    subheading: "Get In Touch",
+                    email: "kinarapublications@gmail.com",
+                    whatsappno: "+918149943088",
+                    address: "Zeenath Society, Nanded Road",
+                    city: "Latur",
+                    pincode: "413512",
+                    state: "Maharashtra"
+                },
+                footer: {
+                    socialMedia: [
+                        { id: 0, name: "googleplus", class: "fa-google-plus-square", href: "" },
+                        { id: 1, name: "twitter", class: "fa-twitter-square", href: "" },
+                        { id: 2, name: "facebook", class: "fa-facebook-official", href: "" },
+                        { id: 3, name: "youtube", class: "fa-youtube-play", href: "" },
+                        { id: 4, name: "instagram", class: "fa-instagram", href: "" },
+                    ],
+                    header: "Office",
+                    address: [
+                        "Zeenath Society",
+                        "Nanded Road",
+                        "Latur 413512",
+                        "Maharashtra"
+                    ]
+                }
+            },
+            methods: {
+                handleScroll: function () {
+                    function elementInViewport2(el) {
+                        var top = el.offsetTop;
+                        var left = el.offsetLeft;
+                        var width = el.offsetWidth;
+                        var height = el.offsetHeight;
+
+                        while (el.offsetParent) {
+                            el = el.offsetParent;
+                            top += el.offsetTop;
+                            left += el.offsetLeft;
+                        }
+
+                        return (
+                            top < (window.pageYOffset + window.innerHeight) &&
+                            left < (window.pageXOffset + window.innerWidth) &&
+                            (top + height) > window.pageYOffset &&
+                            (left + width) > window.pageXOffset
+                        );
+                    }
+                    if (elementInViewport2(document.querySelector('#show-animation')) && this.factdetails.flag) {
+                        for (i of this.factdetails.facts)
+                            i.count=i.endValue;
+                        this.factdetails.flag = false;
+                    }
+                }
+            },
+            created: function () {
+                window.addEventListener('scroll', this.handleScroll);
+            },
+            destroyed: function () {
+                window.removeEventListener('scroll');
+            },
+        })
+
+    </script>
+</body>
+
+</html>
