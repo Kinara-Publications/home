@@ -1,0 +1,82 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
+}
+
+.product-name {
+    text-shadow: 0 0 3px white, 0 0 5px white;
+}
+
+.product-name:hover {
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.fact-count:hover {
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+    text-decoration: none;
+}
+
+.box {
+    padding: 50px 20px;
+    margin-bottom: 50px;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    height: 200px;
+    position: relative;
+    border-radius: 25%;
+    font-weight: 850;
+    font-size: 22px;
+    color: #111;
+    /* padding-top: 25px; */
+    text-transform: uppercase;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.box h4 {
+    margin-top: 24px;
+    color: #111;
+    text-shadow: 0 0 3px white, 0 0 5px white;
+}
+
+.section-title {
+    font-size: 32px;
+    color: #111;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.section-description {
+    text-align: center;
+    padding-bottom: 40px;
+    color: #999;
+}
+
+.jumbotron h1
+{
+    margin-top:25vh;
+    font-weight: bolder;
+    color: aliceblue;
+    text-shadow: black 1px 1px 20px;
+}
+.lead
+{
+    color:black;
+    font-weight: bolder;
+    text-shadow: white 0px 0px 10px;
+}
+.quality-list-items
+{
+    font-family: -apple-system,Helvetica Neue,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,sans-serif;
+    margin-top: 0;
+}
+/* .app-body
+{
+    background-color: rgba(243, 240, 240, 0.89);
+} */
