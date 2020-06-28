@@ -80,3 +80,8 @@ h6 {
 {
     background-color: rgba(243, 240, 240, 0.89);
 } */
+
+a[href="#"]
+{
+    pointer-events: none;
+}

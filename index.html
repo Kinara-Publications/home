@@ -11,7 +11,7 @@
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
 
     <!-- Load polyfills to support older browsers -->
-    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script> -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
 
     <!-- Load Vue followed by BootstrapVue -->
     <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
@@ -29,9 +29,9 @@
 
 <body>
     <div id="app">
-        <app-header :links="links"></app-header>
+        <app-header :links="links" class="position-absolute w-100"></app-header>
         <div class="app-body">
-            <app-banner class="p-2 text-wrap text-uppercase" :header="header" style="height: 70vh;"
+            <app-banner class="p-2 text-wrap text-uppercase" :header="header" style="height: 75vh;"
                 :style="{ 'background-image': 'url(' + header.image + ')', 'background-position': 'center', 'background-repeat': 'no-repeat', 'background-size': 'cover' }">
             </app-banner>
             <our-products :details="productdetails"></our-products>
@@ -48,7 +48,7 @@
             container: "body",
             duration: 750,
             easing: "ease",
-            offset: -60,
+            offset: -10,
             force: true,
             cancelable: true,
             onStart: false,
@@ -314,25 +314,25 @@
                         <h4>{{contact.subheading}}</h4>
                         <div class="form">
                             <form
-                                action="https://docs.google.com/forms/u/4/d/e/1FAIpQLSfTY6oWl5OH0FLmllVhD0_5vB3jxvU4WfOFV_NlotH40nl-sA/formResponse"
+                                action="https://docs.google.com/forms/d/e/1FAIpQLScFIyJu5CpSJAMGPATRtxNOVpxt-n7i7MRQaigYBHZ_ITyH_g/formResponse"
                                 method="POST" class="contactForm">
                                 <div class="form-group">
-                                    <input type="text" name="entry.1640149585" required class="form-control" id="name"
+                                    <input type="text" name="entry.539793736" required class="form-control" id="name"
                                         placeholder="Name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" name="entry.1045781291" id="email"
+                                    <input type="email" class="form-control" name="emailAddress" id="email"
                                         placeholder="Email, ex: kiranapubilcations@gmail.com"
                                         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="entry.1166974658" pattern="[0-9]{10}" required="required"
+                                    <input type="text" name="entry.475897066" pattern="[0-9]{10}" required="required"
                                         class="form-control"
                                         oninput="setCustomValidity(''); checkValidity(); setCustomValidity(validity.valid ? '' :'Please enter a number like: 9764444408');"
                                         placeholder="Phone Number" maxlength="10">
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control" name="entry.839337160" rows="6" required
+                                    <textarea class="form-control" name="entry.1676304636" rows="6" required
                                         placeholder="Message"></textarea>
                                 </div>
                                 <div class="text-center">
@@ -350,30 +350,30 @@
         Vue.component('app-footer', {
             props: ['footer', 'links'],
             template: `
-            <b-container fluid style="color:  wheat;background-color: darkslategray; text-align: center;">
-            <b-row>
-                <b-col lg="6" offset-lg="3" md="8" offset-md="2">
-                    <b-list-group horizontal="md" style="justify-content: space-around;">
-                        <b-list-group-item v-for="item in links" :key="item.id" :href="item.href" style="border: none; background-color: darkslategray;">{{item.title}}</b-list-group-item>
-                    </b-list-group>
-                    <b-row id="show-animation">
-                        <b-col v-for="item in footer.socialMedia" :key="item.id">
-                            <a href="#"><i :class="'fa fa-3x '+item.class" style="color: white;"></i></a>
-                        </b-col>
-                    </b-row>
-                    
-                    <h3 class="mt-4 mt-sm-4">{{footer.header}}</h3>
-                    <b-list-group horizontal="md" style="justify-content: space-around;">
-                        <b-list-group-item v-for="(item,id) in footer.address" :key="id" style="border: none; background-color: darkslategray;">{{item}}</b-list-group-item>
-                    </b-list-group>
-                    <hr class="my-2">
-                </b-col>
-            </b-row>
-            <b-row>
-                <b-col style="background-color: black;">©2020. All Rights Reserved , Kinara Publication @ Aurangabad</b-col>
-            </b-row>
-        </b-container>
-        `
+            <b-container fluid style="color: wheat;background-color: darkslategray; text-align: center;">
+                <b-row>
+                    <b-col lg="6" offset-lg="3" md="8" offset-md="2">
+                        <b-list-group horizontal="md" style="justify-content: space-around;">
+                            <b-list-group-item v-for="item in links" :key="item.id" :href="item.href" v-scroll-to="item.href" style="border: none; color:  wheat; background-color: darkslategray;">{{item.title}}</b-list-group-item>
+                        </b-list-group>
+                        <b-row id="show-animation">
+                            <b-col v-for="item in footer.socialMedia" :key="item.id">
+                                <a href="#"><i :class="'fa fa-3x '+item.class" style="color: white;"></i></a>
+                            </b-col>
+                        </b-row>
+                        
+                        <h3 class="mt-4 mt-sm-4">{{footer.header}}</h3>
+                        <b-list-group horizontal="md" style="justify-content: space-around;">
+                            <b-list-group-item v-for="(item,id) in footer.address" :key="id" style="border: none; background-color: darkslategray;">{{item}}</b-list-group-item>
+                        </b-list-group>
+                        <hr class="my-2">
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col style="background-color: black;">©2020. All Rights Reserved , Kinara Publication @ Aurangabad</b-col>
+                </b-row>
+            </b-container>
+            `
         })
 
         var app = new Vue({
@@ -422,7 +422,6 @@
                         { index: 1, name: "Customers Served", count: "0", startValue: 0, endValue: 4025 },
                         { index: 2, name: "Projects Completed", count: "0", startValue: 0, endValue: 2520 },
                     ],
-                    animationDuration: 223, //in miliseconds
                     flag: true,
                 },
                 testimonialdetails: {
