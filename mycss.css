@@ -81,7 +81,7 @@ h6 {
     background-color: rgba(243, 240, 240, 0.89);
 } */
 
-a[href="#"]
+a[href="#"], a[href="https://kinara-publications.github.io/website/index#"]
 {
     pointer-events: none;
 }
