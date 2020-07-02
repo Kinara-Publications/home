@@ -108,7 +108,12 @@ var SiteData = {
             {
                 name: "All Schools & Office Stationary",
                 image: ""
-            },],
+            },
+            {
+                name: "College Record Book (practical book)",
+                image: ""
+            }
+        ],
         extra: false
     },
     qualitydetails:
