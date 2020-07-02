@@ -41,7 +41,7 @@
     <div id="app">
         <app-header :links="links" class="position-absolute w-100"></app-header>
         <div class="app-body">
-            <app-banner class="p-2 text-wrap text-uppercase" :header="header" style="height: 75vh;" :style="{ 'background-image': 'url(' + header.image + ')', 'background-position': 'center', 'background-repeat': 'no-repeat', 'background-size': 'cover' }">
+            <app-banner class="p-2 text-wrap text-uppercase" :header="header" :style="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),url('+ header.image + ')', 'background-position': 'center', 'background-repeat': 'no-repeat', 'background-size': 'cover' }">
             </app-banner>
             <our-products :productdetails="productdetails"></our-products>
             <quality-assured :details="qualitydetails"></quality-assured>

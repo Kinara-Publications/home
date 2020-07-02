@@ -23,9 +23,9 @@ var SiteData = {
     header:
     {
         title: "Kinara Publications",
-        quote: "Delievering More than expected",
-        info: "",
-        image: "img/banner-img.jpg"
+        quote: "All Stationary For Schools And Offices",
+        info: "We provide Quality at Reasonable Rates",
+        image: "https://images.pexels.com/photos/159866/books-book-pages-read-literature-159866.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     },
     productdetails:
     {
@@ -108,12 +108,7 @@ var SiteData = {
             {
                 name: "All Schools & Office Stationary",
                 image: ""
-            },
-            {
-                name: "College Record Book (practical book)",
-                image: ""
-            }
-        ],
+            },],
         extra: false
     },
     qualitydetails:
@@ -198,7 +193,7 @@ var SiteData = {
         subheading: "Get In Touch",
         email: "kinarapublications@gmail.com",
         whatsappno: "+919764444408,+917588930502",
-        address: "Near V I P Function Hall, beside Sahara Hospital central naka road",
+        address: "Near V I P Function Hall, Beside Sahara Hospital Central Naka Road",
         city: "Aurangabad",
         pincode: "431001",
         state: "Maharashtra"
@@ -239,7 +234,7 @@ var SiteData = {
         header: "Office",
         address: [
             "Near V I P Function Hall",
-            "beside Sahara Hospital central naka road",
+            "Beside Sahara Hospital Central Naka Road",
             "Aurangabad 431001",
             "Maharashtra"
         ]

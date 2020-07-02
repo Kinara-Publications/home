@@ -57,29 +57,32 @@ h6 {
     color: #999;
 }
 
-.jumbotron h1 {
-    margin-top: 25vh;
-    font-weight: bolder;
-    color: aliceblue;
-    text-shadow: black 1px 1px 20px;
+#banner{
+    height: 80vh;
+    font-family: "Poppins", sans-serif;
 }
 
-.lead {
-    color: black;
-    font-weight: bolder;
+#banner > .container{
+    margin-top: 40vh;
+
+}
+#banner > .container > h1{
+    /* font-weight: bolder; */
     text-shadow: white 0px 0px 10px;
+
+    color: wheat;
+}
+
+#banner > .container > p{
+    color: #ffffff;
+    /* font-weight: bolder; */
+    /* text-shadow: white 0px 0px 10px; */
 }
 
 .quality-list-items {
     font-family: -apple-system, Helvetica Neue, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, sans-serif;
     margin-top: 0;
 }
-
-
-/* .app-body
-{
-    background-color: rgba(243, 240, 240, 0.89);
-} */
 
 a[href="#"],
 a[href="https://kinara-publications.github.io/website/index#"] {
